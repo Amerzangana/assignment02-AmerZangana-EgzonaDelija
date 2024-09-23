@@ -1,0 +1,16 @@
+###
+Get http://localhost:3000/posts
+
+###
+POST http://localhost:3000/posts
+Content-Type: application/json
+
+{
+        "title": "Amore Gang Gang.",
+        "views": 10011023
+    }
+
+###
+DELETE  http://localhost:3000/posts/1
+Content-Type: application/json
+
