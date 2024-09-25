@@ -1,16 +1,77 @@
 ###
-Get http://localhost:3000/posts
-
-###
-POST http://localhost:3000/posts
+POST http://localhost:3000/api/login
 Content-Type: application/json
 
 {
-        "title": "Amore Gang Gang.",
-        "views": 10011023
-    }
+    "username": "tester01",
+    "password": "GteteqbQQgSr88SwNExUQv2ydb7xuf8c"
+}
 
 ###
-DELETE  http://localhost:3000/posts/1
-Content-Type: application/json
 
+GET http://localhost:3000/api/rooms
+Content-Type: application/json
+X-user-auth: {"username":"tester01","token":"0ce268f25cd8141db222b4d17872529f"}
+
+###
+GET http://localhost:3000/api/room/3
+Content-Type: application/json
+X-user-auth: {"username":"tester01","token":"734aada979327f6f15e08876f11add5f"}
+###
+
+###
+
+POST http://localhost:3000/api/room/new
+Content-Type: application/json
+X-user-auth: {"username":"tester01","token":"1ec2099a6e9c50bd166c915e47dc4dc4"}
+
+{
+    "features": [
+        "ensuite",
+        "sea_view"
+    ],
+    "category": "single",
+    "number": "1514",
+    "floor": "1145",
+    "available": true,
+    "price": "15151515"
+}
+
+
+
+###
+
+PUT http://localhost:3000/api/room/3
+Content-Type: application/json
+X-user-auth: {"username":"tester01","token":"1d49458c1c4195d2e4caa86eaf7e608f"}
+
+{
+    "id": 111111,
+    "created": "2020-01-03T12:00:00.000Z",
+    "category": "double",
+    "floor": 111111,
+    "number": 1011111,
+    "available": true,
+    "price": 1501111110,
+    "features": [
+        "balcony",
+        "ensuite"
+    ]
+}
+
+###
+DELETE  http://localhost:3000/api/room/111111
+Content-Type: application/json
+X-user-auth: {"username":"tester01","token":"90fab9911c705d2b7413b4bab8db434f"}
+###
+
+
+###
+//DELETE  http://localhost:3000/posts/1
+//Content-Type: application/json
+
+###
+###
+///Get http://localhost:3000/room
+
+###
