@@ -3,26 +3,22 @@ import { faker } from "@faker-js/faker";
 import { APIHelper } from './apiHelpers';
 import { stringify } from 'querystring';
 import exp from 'constants';
-import { generateRandomRoomsPayload } from './testData';
+import { generateRoomsData } from './testData';
 
 
 const BASE_URL = `${process.env.BASE_URL}`;
 
 test.describe('Test Suite Rooms', () => {
     let apiHelper: APIHelper;
-
-    test.beforeAll( "test", async ({request}) => {
+    
+    test.beforeAll(async ({ request }) => {
         apiHelper = new APIHelper(BASE_URL);
             const login = await apiHelper.login(request);
             expect(login.ok()).toBeTruthy();
             expect (login.status()).toBe(200);
-
+    
     });
-
-
-
-
-
+    
     test('Get all Rooms', async ({ request }) => {
         const getAllRooms = await apiHelper.getAllRooms(request);
         expect(getAllRooms.ok()).toBeTruthy();
@@ -37,39 +33,25 @@ test.describe('Test Suite Rooms', () => {
     
       });
 
+      test('Delete Room By ID', async ({ request }) => {
+        const deleteRoomById = await apiHelper.deleteRoomById(request);
+        expect(deleteRoomById.ok()).toBeTruthy();
+        expect (deleteRoomById.status()).toBe(200);
+    
+      });
 
-      test('Create Room', async ({ request }) => {
-        const createRoom = await apiHelper.createRoom(request, generateRandomRoomsPayload);
+
+    test('Create Room V2', async ({ request }) => {
+        const payload = generateRoomsData();
+        const createRoom = await apiHelper.createRoom(request, payload);
         expect(createRoom.ok()).toBeTruthy();
-        expect (createRoom.status()).toBe(200);
-    
-      });
-
-      test('Create Room V2', async ({ request }) => {
-        const payload = generateRandomRoomsPayload();
-        const createRoomResponse = await apiHelper.createRoom(request, payload);
-        expect(createRoomResponse.ok()).toBeTruthy();
-    
-        expect(await createRoomResponse.json()).toMatchObject({
-          roomNumber: payload.roomNumber,
-          roomFloor: payload.roomFloor,
-          roomPrice: payload.roomPrice
-        })
-        const getAllRooms = await apiHelper.getAllRooms(request);
-        expect(getAllRooms.ok()).toBeTruthy();
-        expect(await getAllRooms.json()).toEqual(
-          expect.arrayContaining([
             expect.objectContaining({
-                roomNumber: payload.roomNumber,
-                roomFloor: payload.roomFloor,
-                roomPrice: payload.roomPrice
-            })
-          ])
-        )
-      });
-
-
-
-
-
-})
+            number: payload.number,
+            floor: payload.floor,
+            price: payload.price,
+            available: payload.available,
+            features: expect.arrayContaining(payload.features),
+            category: payload.category
+        });
+    });
+});

@@ -1,6 +1,3 @@
 npm install dotenv
 
 npm install --save-dev @faker-js/faker
-
-npm install json-server
-
