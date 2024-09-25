@@ -1,14 +1,57 @@
 import { test, expect, APIResponse } from '@playwright/test';
 import { faker } from "@faker-js/faker";
+import { APIHelper } from './apiHelpers';
+import { stringify } from 'querystring';
+import { generateRandomPostPayload } from './testData';
+
+const BASE_URL = 'http://localhost:3000';
 
 test.describe("Test Suite Backend V1", ()=>{
-  test('Has title', async ({ request }) => {
+  let apiHelper: APIHelper;
+  
+  test.beforeAll(() => {
+    apiHelper = new APIHelper(BASE_URL);
+
+
+  });
+
+  test('Test case 01 - Get All Posts V2', async ({ request }) => {
+    const getPosts = await apiHelper.getAllPosts(request);
+    expect(getPosts.ok()).toBeTruthy();
+
+  });
+
+  test('Test case 02 - Create Posts V2', async ({ request }) => {
+    const payload = generateRandomPostPayload();
+    const createPostResponse = await apiHelper.createpost(request, payload);
+    expect(createPostResponse.ok()).toBeTruthy();
+
+    expect(await createPostResponse.json()).toMatchObject({
+      title: payload.title,
+      views: payload.views
+    })
+    const getPosts = await apiHelper.getAllPosts(request);
+    expect(getPosts.ok()).toBeTruthy();
+    expect(await getPosts.json()).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          title: payload.title, 
+          views: payload.views,
+        })
+      ])
+    )
+  });
+
+
+  /**
+  test('Test case 01', async ({ request }) => {
   const getPostsResponse = await request.get("http://localhost:3000/posts")
   expect (getPostsResponse.ok()).toBeTruthy();
   expect (getPostsResponse.status()).toBe(200);
   //ApiResponse.status();
   //apiResponce.ok(); 
 });
+ */
 test('test cast 02 - Create Post', async ({ request }) => {
     const payload = {
         "title": faker.lorem.sentence(),
