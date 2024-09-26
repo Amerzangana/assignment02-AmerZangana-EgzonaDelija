@@ -3,12 +3,12 @@ import { faker } from "@faker-js/faker";
 import { APIHelper } from './apiHelpers';
 import { stringify } from 'querystring';
 import exp from 'constants';
-import { generateRoomsData } from './testData';
+import * as testData from './testData';
 
 
 const BASE_URL = `${process.env.BASE_URL}`;
 
-test.describe('Test Suite Rooms', () => {
+test.describe('Test Suite Hotel', () => {
     let apiHelper: APIHelper;
     
     test.beforeAll(async ({ request }) => {
@@ -40,9 +40,22 @@ test.describe('Test Suite Rooms', () => {
     
       });
 
+      test('Update Room Information', async ({ request }) => {
+        const payload = testData.generateRoomsData();
+        const updateRoom = await apiHelper.updateRoom(request, payload);
+        expect(updateRoom.ok()).toBeTruthy();
+        expect (updateRoom.status()).toBe(200);
+        expect.objectContaining({
+            number: payload.number,
+            floor: payload.floor,
+            price: payload.price,
+            id: payload.id
+        });
+      });
 
-    test('Create Room V2', async ({ request }) => {
-        const payload = generateRoomsData();
+
+    test('Create Room', async ({ request }) => {
+        const payload = testData.generateRoomsData();
         const createRoom = await apiHelper.createRoom(request, payload);
         expect(createRoom.ok()).toBeTruthy();
             expect.objectContaining({
@@ -54,4 +67,46 @@ test.describe('Test Suite Rooms', () => {
             category: payload.category
         });
     });
+    
+    test('Get all Bills', async ({ request }) => {
+      const getAllBills = await apiHelper.getAllBills(request);
+      expect(getAllBills.ok()).toBeTruthy();
+      expect (getAllBills.status()).toBe(200);
+    });
+    test('Create Bill', async ({ request }) => {
+        const payload = testData.generateBillData();
+        const createBill = await apiHelper.createBill(request, payload);
+        expect(createBill.ok()).toBeTruthy();
+        expect (createBill.status()).toBe(200);
+        expect.objectContaining({
+            value: payload.value,
+            paid: payload.paid
+        });
+      });
+      test('Create Client', async ({ request }) => {
+        const payload = testData.generateClientData();
+        const createClient = await apiHelper.createClient(request, payload);
+        expect(createClient.ok()).toBeTruthy();
+            expect.objectContaining({
+            name: payload.name,
+            email: payload.email,
+            telephone: payload.telephone
+    });
+    });
+      
+
+    test('Get all Clients', async ({ request }) => {
+        const getAllClients = await apiHelper.getAllClients(request);
+        expect(getAllClients.ok()).toBeTruthy();
+        expect (getAllClients.status()).toBe(200);
+      });
+
+      test('Delete Client By ID2', async ({ request }) => {
+        const allClients = await (await apiHelper.getAllClients(request)).json();
+        const lastButOneID = allClients[allClients.length - 2].id;
+    
+        expect((await apiHelper.deleteClientById(request, lastButOneID)).ok()).toBeTruthy();
+        expect((await apiHelper.getByID(request, lastButOneID)).status()).toBe(401);
+    });
+
 });
