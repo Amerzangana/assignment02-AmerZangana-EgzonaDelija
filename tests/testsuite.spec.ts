@@ -5,7 +5,6 @@ import { stringify } from 'querystring';
 import exp from 'constants';
 import * as testData from './testData';
 
-
 const BASE_URL = `${process.env.BASE_URL}`;
 
 test.describe('Test Suite Hotel', () => {
@@ -16,7 +15,6 @@ test.describe('Test Suite Hotel', () => {
             const login = await apiHelper.login(request);
             expect(login.ok()).toBeTruthy();
             expect (login.status()).toBe(200);
-    
     });
     
     test('Get all Rooms', async ({ request }) => {
@@ -25,19 +23,16 @@ test.describe('Test Suite Hotel', () => {
         expect (getAllRooms.status()).toBe(200);
       });
 
-
       test('Get Room By ID', async ({ request }) => {
         const getRoomByID = await apiHelper.getRoomByID(request);
         expect(getRoomByID.ok()).toBeTruthy();
         expect (getRoomByID.status()).toBe(200);
-    
       });
 
       test('Delete Room By ID', async ({ request }) => {
         const deleteRoomById = await apiHelper.deleteRoomById(request);
         expect(deleteRoomById.ok()).toBeTruthy();
         expect (deleteRoomById.status()).toBe(200);
-    
       });
 
       test('Update Room Information', async ({ request }) => {
@@ -52,7 +47,6 @@ test.describe('Test Suite Hotel', () => {
             id: payload.id
         });
       });
-
 
     test('Create Room', async ({ request }) => {
         const payload = testData.generateRoomsData();
@@ -73,6 +67,7 @@ test.describe('Test Suite Hotel', () => {
       expect(getAllBills.ok()).toBeTruthy();
       expect (getAllBills.status()).toBe(200);
     });
+
     test('Create Bill', async ({ request }) => {
         const payload = testData.generateBillData();
         const createBill = await apiHelper.createBill(request, payload);
@@ -83,6 +78,7 @@ test.describe('Test Suite Hotel', () => {
             paid: payload.paid
         });
       });
+
       test('Create Client', async ({ request }) => {
         const payload = testData.generateClientData();
         const createClient = await apiHelper.createClient(request, payload);
@@ -92,8 +88,7 @@ test.describe('Test Suite Hotel', () => {
             email: payload.email,
             telephone: payload.telephone
     });
-    });
-      
+    }); 
 
     test('Get all Clients', async ({ request }) => {
         const getAllClients = await apiHelper.getAllClients(request);
@@ -104,7 +99,6 @@ test.describe('Test Suite Hotel', () => {
       test('Delete Client By ID2', async ({ request }) => {
         const allClients = await (await apiHelper.getAllClients(request)).json();
         const lastButOneID = allClients[allClients.length - 2].id;
-    
         expect((await apiHelper.deleteClientById(request, lastButOneID)).ok()).toBeTruthy();
         expect((await apiHelper.getByID(request, lastButOneID)).status()).toBe(404);
     });
@@ -128,15 +122,10 @@ test.describe('Test Suite Hotel', () => {
         expect (getAllReservation.status()).toBe(200);
       });
 
-
     test('Delete Reservation By ID', async ({ request }) => {
         const allReservation = await (await apiHelper.getAllReservation(request)).json();
         const lastButOneID = allReservation[allReservation.length - 1].id;
-  
         expect((await apiHelper.deleteReservationById(request, lastButOneID)).ok()).toBeTruthy();
         expect((await apiHelper.getreservationByID(request, lastButOneID)).status()).toBe(404);
-  
       });
-  
-
 });

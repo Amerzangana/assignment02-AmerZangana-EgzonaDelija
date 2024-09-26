@@ -23,6 +23,7 @@ export const generateRoomsData = () => {
         id
     };
 };
+
     export const generateBillData = () => {
         const value = faker.commerce.price({ min: 10000, max: 5000000, dec: 0 }); 
         const paid = faker.datatype.boolean(); 

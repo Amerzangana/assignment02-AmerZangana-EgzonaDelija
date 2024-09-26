@@ -9,7 +9,6 @@ export class APIHelper{
         this.baseUrl = baseUrl;
     }
 
-
     async login(request: APIRequestContext) {
         const response = await request.post(`${this.baseUrl}/login`, {
             headers: {
@@ -41,7 +40,6 @@ export class APIHelper{
         return response;
     }
     
-    
     async getRoomByID(request: APIRequestContext) {
         const response = await request.get(`${this.baseUrl}/room/1`, 
             {
@@ -55,6 +53,7 @@ export class APIHelper{
         );
         return response;
     }
+
     async createRoom(request: APIRequestContext, payload: object) {
         const response = await request.post(`${this.baseUrl}/room/new`, 
             {
@@ -70,8 +69,6 @@ export class APIHelper{
         return response;
     }
     
-    
-    
     async updateRoom(request: APIRequestContext, payload: object) {
         const response = await request.put(`${this.baseUrl}/room/1`, {
             headers: {
@@ -85,6 +82,7 @@ export class APIHelper{
         });
         return response;
     }
+
     async deleteRoomById(request: APIRequestContext) {
         const response = await request.delete(`${this.baseUrl}/room/2`, 
             {
@@ -98,6 +96,7 @@ export class APIHelper{
         );
         return response;
     }
+
     async createBill(request: APIRequestContext, payload: object) {
         const response = await request.post(`${this.baseUrl}/bill/new`, 
             {
@@ -126,6 +125,7 @@ export class APIHelper{
         );
         return response;
     }
+
     async createClient(request: APIRequestContext, payload: object) {
         const response = await request.post(`${this.baseUrl}/client/new`, 
             {
@@ -140,10 +140,12 @@ export class APIHelper{
         });
         return response;
     }
+
     async getByID(request: APIRequestContext, clientId: number){
         const response = await request.get(`${this.baseUrl}/client/${clientId}`);
         return response;
     }
+
     async updateClient(request: APIRequestContext, payload: object) {
         const response = await request.put(`${this.baseUrl}/client/1`, {
             headers: {
@@ -157,6 +159,7 @@ export class APIHelper{
         });
         return response;
     }
+
     async deleteClientById(request: APIRequestContext, clientId: number) {
         const response = await request.delete(`${this.baseUrl}/Client/${clientId}`, 
             {
@@ -170,6 +173,7 @@ export class APIHelper{
         );
         return response;
     }
+
     async getAllClients(request: APIRequestContext) {
         const response = await request.get(`${this.baseUrl}/clients`, 
             {
@@ -214,8 +218,6 @@ async deleteReservationById(request: APIRequestContext, reservationId: number) {
         return response;
 }
 
-
-
 async getreservationByID(request: APIRequestContext, reservationId: number) {
     const response = await request.get(`${this.baseUrl}/reservation/${reservationId}`, {
         headers: {
@@ -228,6 +230,7 @@ async getreservationByID(request: APIRequestContext, reservationId: number) {
     });
     return response;
 }
+
 async getAllReservation(request: APIRequestContext,) {
 const response = await request.get(`${this.baseUrl}/reservations`,  
     {
@@ -242,5 +245,4 @@ const response = await request.get(`${this.baseUrl}/reservations`,
 console.log(`Response status: ${response.status()}`);
 return response;
 }
-
 }
