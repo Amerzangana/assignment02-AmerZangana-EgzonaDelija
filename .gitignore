@@ -5,4 +5,4 @@ node_modules/
 /playwright/.cache/
 .env
 /node_modules
-/requests.HTTP
+requests.HTTP
