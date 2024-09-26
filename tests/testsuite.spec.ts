@@ -106,7 +106,37 @@ test.describe('Test Suite Hotel', () => {
         const lastButOneID = allClients[allClients.length - 2].id;
     
         expect((await apiHelper.deleteClientById(request, lastButOneID)).ok()).toBeTruthy();
-        expect((await apiHelper.getByID(request, lastButOneID)).status()).toBe(401);
+        expect((await apiHelper.getByID(request, lastButOneID)).status()).toBe(404);
     });
+
+    test('Create Reservation', async ({ request }) => {
+        const payload = testData.generateReservationData();
+        const createReservation = await apiHelper.createReservation(request, payload);
+        expect(createReservation.ok()).toBeTruthy();
+         expect.objectContaining({
+            start: payload.start,
+            end: payload.end,
+            client: payload.client,
+            room: payload.room,
+            bill: payload.bill
+        });
+    });
+      
+    test('Get All Reservations', async ({ request }) => {
+        const getAllReservation = await apiHelper.getAllReservation(request);
+        expect(getAllReservation.ok()).toBeTruthy();
+        expect (getAllReservation.status()).toBe(200);
+      });
+
+
+    test('Delete Reservation By ID', async ({ request }) => {
+        const allReservation = await (await apiHelper.getAllReservation(request)).json();
+        const lastButOneID = allReservation[allReservation.length - 1].id;
+  
+        expect((await apiHelper.deleteReservationById(request, lastButOneID)).ok()).toBeTruthy();
+        expect((await apiHelper.getreservationByID(request, lastButOneID)).status()).toBe(404);
+  
+      });
+  
 
 });
