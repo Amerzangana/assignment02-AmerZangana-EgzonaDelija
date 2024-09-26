@@ -64,14 +64,6 @@ DELETE  http://localhost:3000/api/room/111111
 Content-Type: application/json
 X-user-auth: {"username":"tester01","token":"90fab9911c705d2b7413b4bab8db434f"}
 ###
-
-
-###
-//DELETE  http://localhost:3000/posts/1
-//Content-Type: application/json
-
-###
-###
-///Get http://localhost:3000/room
-
-###
+GET http://localhost:3000/api/reservation/1
+Content-Type: application/json
+X-user-auth: {"username":"tester01","token":"8330fe2f40e318033c8d4ab215875bca"}

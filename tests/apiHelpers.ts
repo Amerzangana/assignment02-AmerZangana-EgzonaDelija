@@ -184,5 +184,63 @@ export class APIHelper{
         return response;
     }
 
+async createReservation(request: APIRequestContext, payload: object) {
+    const response = await request.post(`${this.baseUrl}/reservation/new`, 
+        {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-user-auth': JSON.stringify({
+                username: this.username,
+                token: this.token
+            })
+        },
+        data: JSON.stringify(payload)
+    }
+);
+return response;
 }
 
+async deleteReservationById(request: APIRequestContext, reservationId: number) {
+    const response = await request.delete(`${this.baseUrl}/reservation/${reservationId}`,
+        {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            }}
+        );
+        return response;
+}
+
+
+
+async getreservationByID(request: APIRequestContext, reservationId: number) {
+    const response = await request.get(`${this.baseUrl}/reservation/${reservationId}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'x-user-auth': JSON.stringify({
+                username: this.username,
+                token: this.token
+            })
+        }
+    });
+    return response;
+}
+async getAllReservation(request: APIRequestContext,) {
+const response = await request.get(`${this.baseUrl}/reservations`,  
+    {
+    headers: {
+        'Content-Type': 'application/json',
+        'x-user-auth': JSON.stringify({
+            username: this.username,
+            token: this.token
+        })
+    },
+});
+console.log(`Response status: ${response.status()}`);
+return response;
+}
+
+}
