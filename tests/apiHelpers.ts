@@ -40,17 +40,17 @@ export class APIHelper{
         );
         return response;
     }
-
-
+    
+    
     async getRoomByID(request: APIRequestContext) {
-        const response = await request.get(`${this.baseUrl}/rooms/1`, 
+        const response = await request.get(`${this.baseUrl}/room/1`, 
             {
-            headers: {
-                'Content-Type': 'application/json',
-                'x-user-auth': JSON.stringify({
-                    username: this.username,
-                    token: this.token
-                })
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-user-auth': JSON.stringify({
+                        username: this.username,
+                        token: this.token
+                    })
             }}
         );
         return response;
@@ -58,7 +58,7 @@ export class APIHelper{
     async createRoom(request: APIRequestContext, payload: object) {
         const response = await request.post(`${this.baseUrl}/room/new`, 
             {
-            headers: {
+                headers: {
                 'Content-Type': 'application/json',
                 'x-user-auth': JSON.stringify({
                     username: this.username,
@@ -70,10 +70,10 @@ export class APIHelper{
         return response;
     }
     
-
-
-    async updateRoom(request: APIRequestContext, roomId: number, payload: object) {
-        const response = await request.put(`${this.baseUrl}/room/${roomId}`, {
+    
+    
+    async updateRoom(request: APIRequestContext, payload: object) {
+        const response = await request.put(`${this.baseUrl}/room/1`, {
             headers: {
                 'Content-Type': 'application/json',
                 'x-user-auth': JSON.stringify({
@@ -98,4 +98,91 @@ export class APIHelper{
         );
         return response;
     }
+    async createBill(request: APIRequestContext, payload: object) {
+        const response = await request.post(`${this.baseUrl}/bill/new`, 
+            {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload) 
+        });
+        return response;
+    }
+    
+    async getAllBills(request: APIRequestContext) {
+        const response = await request.get(`${this.baseUrl}/bills`, 
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'x-user-auth': JSON.stringify({
+                        username: this.username,
+                        token: this.token
+                })
+            }}
+        );
+        return response;
+    }
+    async createClient(request: APIRequestContext, payload: object) {
+        const response = await request.post(`${this.baseUrl}/client/new`, 
+            {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload) 
+        });
+        return response;
+    }
+    async getByID(request: APIRequestContext, clientId: number){
+        const response = await request.get(`${this.baseUrl}/client/${clientId}`);
+        return response;
+    }
+    async updateClient(request: APIRequestContext, payload: object) {
+        const response = await request.put(`${this.baseUrl}/client/1`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            },
+            data: JSON.stringify(payload) 
+        });
+        return response;
+    }
+    async deleteClientById(request: APIRequestContext, clientId: number) {
+        const response = await request.delete(`${this.baseUrl}/Client/${clientId}`, 
+            {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            }}
+        );
+        return response;
+    }
+    async getAllClients(request: APIRequestContext) {
+        const response = await request.get(`${this.baseUrl}/clients`, 
+            {
+            headers: {
+                'Content-Type': 'application/json',
+                'x-user-auth': JSON.stringify({
+                    username: this.username,
+                    token: this.token
+                })
+            }}
+        );
+        return response;
+    }
+
 }
+
